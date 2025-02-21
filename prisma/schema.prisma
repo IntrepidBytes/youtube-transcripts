@@ -1,0 +1,21 @@
+// This is your Prisma schema file
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Transcript {
+  id        String   @id @default(cuid())
+  videoId   String
+  videoTitle String
+  videoUrl  String
+  content   String   // JSON string of TranscriptSegment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([videoId])
+} 
