@@ -2,16 +2,22 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Transcript, TranscriptSegment } from "@/types"
+import { TranscriptSegment } from "@/types"
 import { Download } from "lucide-react"
 
 interface TranscriptViewProps {
-  transcript: Transcript
+  transcript: {
+    id: string;
+    videoId: string;
+    videoTitle: string;
+    videoUrl: string;
+    content: TranscriptSegment[];
+  }
 }
 
 export function TranscriptView({ transcript }: TranscriptViewProps) {
   const [copied, setCopied] = useState(false)
-  const segments: TranscriptSegment[] = JSON.parse(transcript.content)
+  const segments = transcript.content
 
   const copyToClipboard = async () => {
     try {

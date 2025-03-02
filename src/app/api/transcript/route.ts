@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server"
 import { YoutubeTranscript } from "youtube-transcript"
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient()
 
 export async function POST(request: Request) {
   try {
-    const { url, showTimestamps } = await request.json()
+    const { url } = await request.json()
 
     // Extract video ID from URL
     const videoId = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)?.[1]
@@ -62,17 +59,14 @@ export async function POST(request: Request) {
       )
     }
 
-    // Save to database
-    const savedTranscript = await prisma.transcript.create({
-      data: {
-        videoId,
-        videoTitle,
-        videoUrl: url,
-        content: JSON.stringify(transcript),
-      },
+    // Return transcript data directly without saving to database
+    return NextResponse.json({
+      id: videoId, // Using videoId as the identifier
+      videoId,
+      videoTitle,
+      videoUrl: url,
+      content: transcript,
     })
-
-    return NextResponse.json(savedTranscript)
   } catch (error) {
     console.error("Transcript fetch error:", error)
     return NextResponse.json(
