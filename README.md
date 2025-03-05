@@ -4,13 +4,9 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 
 ## Features
 
-- 🎨 Beautiful dark mode design with purple accents
 - 📝 Fetch transcripts from any YouTube video
-- ⏱️ Toggle timestamp display
-- 📋 Copy, share, and save transcripts
-- 🔍 Search through saved transcripts
+- 📋 Copy and download transcripts
 - 📱 Fully responsive design
-- ✨ Smooth animations and transitions
 
 ## Tech Stack
 
@@ -25,7 +21,7 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   npm install
+   npm install --legacy-peer-deps
    ```
 3. Set up environment variables:
    ```bash
@@ -34,6 +30,11 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 4. Run the development server:
    ```bash
    npm run dev
+   ```
+5. Run the production server:
+   ```bash
+   npm run build
+   npm run start
    ```
 
 ## Environment Variables
