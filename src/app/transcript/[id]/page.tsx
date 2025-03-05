@@ -1,15 +1,48 @@
-import { PrismaClient } from "@prisma/client"
 import { notFound } from "next/navigation"
 import { TranscriptView } from "@/components/transcript-view"
-
-const prisma = new PrismaClient()
+import { YoutubeTranscript } from "youtube-transcript"
 
 async function getTranscript(id: string) {
   try {
-    const transcript = await prisma.transcript.findUnique({
-      where: { id },
+    // Get video details
+    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${process.env.YOUTUBE_API_KEY}`
+    
+    const videoInfoResponse = await fetch(apiUrl, {
+      headers: {
+        'Referer': 'http://localhost:3000'
+      }
     })
-    return transcript
+    
+    if (!videoInfoResponse.ok) {
+      console.error("Video info fetch failed:", {
+        status: videoInfoResponse.status,
+        statusText: videoInfoResponse.statusText
+      })
+      return null
+    }
+
+    const videoInfo = await videoInfoResponse.json()
+    if (!videoInfo.items?.length) {
+      return null
+    }
+    
+    const videoTitle = videoInfo.items[0]?.snippet?.title || "Untitled Video"
+    const videoUrl = `https://www.youtube.com/watch?v=${id}`
+
+    // Get transcript
+    const transcript = await YoutubeTranscript.fetchTranscript(id)
+
+    if (!transcript || transcript.length === 0) {
+      return null
+    }
+
+    return {
+      id,
+      videoId: id,
+      videoTitle,
+      videoUrl,
+      content: transcript,
+    }
   } catch (error) {
     console.error("Error fetching transcript:", error)
     return null
@@ -18,13 +51,10 @@ async function getTranscript(id: string) {
 
 export default async function TranscriptPage({
   params,
-  searchParams,
 }: {
   params: { id: string }
-  searchParams: { timestamps?: string }
 }) {
   const transcript = await getTranscript(params.id)
-  const showTimestamps = searchParams.timestamps !== "false"
 
   if (!transcript) {
     notFound()
@@ -49,7 +79,7 @@ export default async function TranscriptPage({
             </a>
           </p>
         </div>
-        <TranscriptView transcript={transcript} showTimestamps={showTimestamps} />
+        <TranscriptView transcript={transcript} />
       </div>
     </main>
   )

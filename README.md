@@ -18,7 +18,6 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 - TypeScript
 - Tailwind CSS
 - Shadcn/ui
-- Prisma (SQLite)
 - Framer Motion
 
 ## Getting Started
@@ -32,11 +31,7 @@ A modern web application for fetching, viewing, and managing YouTube video trans
    ```bash
    cp .env.example .env
    ```
-4. Initialize the database:
-   ```bash
-   npx prisma db push
-   ```
-5. Run the development server:
+4. Run the development server:
    ```bash
    npm run dev
    ```
@@ -46,7 +41,6 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 Create a `.env` file with the following variables:
 
 ```env
-DATABASE_URL="file:./dev.db"
 YOUTUBE_API_KEY="your_youtube_api_key"
 ```
 
