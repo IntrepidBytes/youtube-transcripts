@@ -1,12 +1,11 @@
 # YouTube Transcript Web App
 
-A modern web application for fetching, viewing, and managing YouTube video transcripts. Built with Next.js 14, TypeScript, and Tailwind CSS.
+A  web application for fetching, viewing, and copy/downloading YouTube video transcripts. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## Features
 
 - 📝 Fetch transcripts from any YouTube video
 - 📋 Copy and download transcripts
-- 📱 Fully responsive design
 
 ## Tech Stack
 
@@ -19,6 +18,7 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 ## Getting Started
 
 1. Clone the repository
+
 2. Install dependencies:
    ```bash
    npm install --legacy-peer-deps
@@ -34,6 +34,8 @@ A modern web application for fetching, viewing, and managing YouTube video trans
 5. Run the production server:
    ```bash
    npm run build
+   ```
+   ```bash
    npm run start
    ```
 
