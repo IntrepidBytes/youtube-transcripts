@@ -24,10 +24,10 @@ echo "Installing dependencies in chunks to avoid memory issues..."
 
 # First, install only production dependencies with reduced memory usage
 export NODE_OPTIONS="--max-old-space-size=512"
-npm install --legacy-peer-deps --no-fund --no-audit --no-optional --production
+npm install --no-fund --no-audit --no-optional --production
 
 # Then install dev dependencies
-npm install --legacy-peer-deps --no-fund --no-audit --no-optional --only=dev
+npm install --no-fund --no-audit --no-optional --only=dev
 
 # Create .env file if it doesn't exist
 if [ ! -f .env ]; then

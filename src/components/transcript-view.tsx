@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { TranscriptSegment } from "@/types"
-import { Download } from "lucide-react"
+import { Download, Copy, Check } from "lucide-react"
 
 interface TranscriptViewProps {
   transcript: {
@@ -59,30 +59,31 @@ export function TranscriptView({ transcript }: TranscriptViewProps) {
   }
 
   return (
-    <div className="space-y-6 animate-in">
-      <div className="relative h-10">
+    <div className="space-y-4 animate-in">
+      <div className="flex justify-between gap-2">
         <button
           onClick={copyToClipboard}
-          className="absolute left-0 px-8 py-2 text-sm font-medium bg-secondary hover:bg-secondary/80 rounded-lg transition-colors"
+          className="flex-1 py-2 text-xs font-medium bg-secondary hover:bg-secondary/80 rounded-md transition-colors flex items-center justify-center gap-1"
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? <Check size={14} /> : <Copy size={14} />}
+          <span>{copied ? "Copied!" : "Copy"}</span>
         </button>
         <button
           onClick={downloadTranscript}
-          className="absolute right-0 px-8 py-2 text-sm font-medium bg-secondary hover:bg-secondary/80 rounded-lg transition-colors flex items-center gap-2"
+          className="flex-1 py-2 text-xs font-medium bg-secondary hover:bg-secondary/80 rounded-md transition-colors flex items-center justify-center gap-1"
         >
-          <Download size={16} />
+          <Download size={14} />
           <span>Download</span>
         </button>
       </div>
 
-      <div className="space-y-4 bg-secondary/20 rounded-lg p-6">
+      <div className="bg-secondary/20 rounded-md p-3 sm:p-4">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="prose prose-invert max-w-none"
+          className="max-w-none"
         >
-          <p className="text-foreground leading-relaxed">
+          <p className="text-sm text-foreground leading-relaxed">
             {formatTranscriptText(segments.map(segment => segment.text).join(" "))}
           </p>
         </motion.div>
