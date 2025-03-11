@@ -5,11 +5,12 @@ import { YoutubeTranscript } from "youtube-transcript"
 async function getTranscript(id: string) {
   try {
     // Get video details
-    const apiUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${process.env.YOUTUBE_API_KEY}`
+    const apiUrl = `https://youtube-v31.p.rapidapi.com/videos?part=snippet&id=${id}`
     
     const videoInfoResponse = await fetch(apiUrl, {
       headers: {
-        'Referer': 'http://localhost:3000'
+        'x-rapidapi-key': process.env.YOUTUBE_API_KEY || '',
+        'x-rapidapi-host': 'youtube-v31.p.rapidapi.com'
       }
     })
     
